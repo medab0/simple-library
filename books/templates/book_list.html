@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Books</title>
+</head>
+<body>
+    <h1>Books in Library</h1>
+    <ul>
+        {% for book in books %}
+        <li>
+            {{ book.title }} ({{ book.author }})
+            {% if book.borrower %}
+            - Borrowed by: {{ book.borrower }} (Due: {{ book.due_date}})
+            {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <input type = "hidden" name="book_id" value="{{ book.id }}">
+                {{ form.borrower }} {{ form.due_date }}
+                <button type="submit">Borrow</button>
+            </form>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
